@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <iostream>
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,9 +23,10 @@ private slots:
     void on_btn_save_clicked();
     void on_btn_close_clicked();
     void on_btn_edit_clicked();
+    void mySlot();
 
 signals:
-    void mySignal(int val);
+    void mySignal();
 
 private:
     Ui::Widget *ui;

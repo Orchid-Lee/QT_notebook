@@ -15,6 +15,9 @@ Widget::Widget(QWidget *parent)
     });
     //第四种方式
     QObject::connect(ui->btn_edit, &QPushButton::clicked, this, &Widget::on_btn_edit_clicked);
+    //自定义信号与槽
+    QObject::connect(this, SIGNAL(mySignal()), this, SLOT(mySlot()));
+    emit mySignal();
     this->setLayout(ui->verticalLayout);
 }
 
@@ -27,19 +30,24 @@ void Widget::on_btn_save_clicked()
 {
     time_t now = time(0);
     char* time_str = ctime(&now);
-    std::cout << "save btn clicked()." << time_str << std::endl;
+    qDebug() << "save btn clicked()." << time_str;
 }
 
 void Widget::on_btn_close_clicked()
 {
     time_t now = time(0);
     char* time_str = ctime(&now);
-    std::cout << "close btn clicked()." << time_str << std::endl;
+    qDebug() << "close btn clicked()." << time_str;
 }
 
 void Widget::on_btn_edit_clicked()
 {
     time_t now = time(0);
     char* time_str = ctime(&now);
-    std::cout << "edit btn clicked()." << time_str << std::endl;
+    qDebug() << "edit btn clicked()." << time_str;
+}
+
+void Widget::mySlot()
+{
+    qDebug() << "This is a customer slot.";
 }
