@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <iostream>
 #include <QDebug>
+#include <QFile>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,6 +25,8 @@ private slots:
     void on_btn_close_clicked();
     void on_btn_edit_clicked();
     void mySlot();
+
+    void on_btn_open_clicked();
 
 signals:
     void mySignal();
