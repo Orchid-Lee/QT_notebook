@@ -5,6 +5,7 @@
 #include <iostream>
 #include <QDebug>
 #include <QFile>
+#include <QFileDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

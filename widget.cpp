@@ -74,27 +74,26 @@ void Widget::mySlot()
 
 void Widget::on_btn_open_clicked()
 {
-    qDebug() << "open btn clicked.";
-    //打开文件
-    QFile file("C:\\Users\\codefish\\Desktop\\openfile.txt");
-    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    qDebug() << "文件打开.";
+    QString fileName = QFileDialog::getOpenFileName(this, tr("选择文件"), "/home", tr("img(*.jpg);;text(*.txt)"));
+    if(!fileName.isNull())
     {
-        qDebug() << "open file failed.";
-        return;
-    };
-    //读取文件
-    // char text[100] = {'\0'};
-    // if(file.read(text, 100) == -1) return;
-    // qDebug() << "content:" << text;
+        QFile file(fileName);
+        if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            qDebug() << "err: file open failed.";
+            return;
+        }
 
-    QTextStream in(&file);
-    in.setEncoding(QStringConverter::Utf8);
-    // QString con = in.read(file.size());
-    while(!in.atEnd()){
-        QString line = in.readLine();
-        qDebug() << line;
-    };
-    file.close();
+        QTextStream in(&file);
+        in.setEncoding(QStringConverter::Utf8);
+        while(!in.atEnd())
+        {
+            QString line = in.readLine();
+            qDebug() << line;
+        }
+        file.close();
+    }
 }
 
 
