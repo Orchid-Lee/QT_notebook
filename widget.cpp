@@ -34,6 +34,23 @@ void Widget::on_btn_save_clicked()
     time_t now = time(0);
     char* time_str = ctime(&now);
     qDebug() << "save btn clicked()." << time_str;
+
+    //打开文件
+    QFile file("C:\\Users\\codefish\\Desktop\\openfile.txt");
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
+        qDebug() << "file open failed.";
+    };
+    //写入文件
+    // if(file.write("This is my first qt program.") == -1)
+    // {
+    //     qDebug() << "write failed.";
+    // };
+    QTextStream out(&file);
+    out.setEncoding(QStringConverter::Utf8);
+    out << "I love u, 我爱你!";
+    //关闭
+    file.close();
+    qDebug() << "write succ.";
 }
 
 void Widget::on_btn_close_clicked()
@@ -59,15 +76,25 @@ void Widget::on_btn_open_clicked()
 {
     qDebug() << "open btn clicked.";
     //打开文件
-    QFile file("C:\\1Users\\codefish\\Desktop\\openfile.txt");
+    QFile file("C:\\Users\\codefish\\Desktop\\openfile.txt");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         qDebug() << "open file failed.";
         return;
     };
     //读取文件
-    char text[100] = {'\0'};
-    if(file.read(text, 100) == -1) return;
-    qDebug() << "content:" << text;
+    // char text[100] = {'\0'};
+    // if(file.read(text, 100) == -1) return;
+    // qDebug() << "content:" << text;
+
+    QTextStream in(&file);
+    in.setEncoding(QStringConverter::Utf8);
+    // QString con = in.read(file.size());
+    while(!in.atEnd()){
+        QString line = in.readLine();
+        qDebug() << line;
+    };
+    file.close();
 }
+
 
