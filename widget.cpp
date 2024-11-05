@@ -133,8 +133,9 @@ void Widget::onCursorPositionChanged()
     //1.获取当前行
     ext.cursor = cursor;
     //2.颜色
-    ext.format.setBackground(QBrush(Qt::yellow));
+    ext.format.setBackground(QBrush(Qt::lightGray));
     ext.format.setProperty(QTextFormat::FullWidthSelection, true);
+    ext.format.setFontUnderline(true);
     //3.设置
     extras.append(ext);
     ui->plainTextEdit->setExtraSelections(extras);
