@@ -6,6 +6,8 @@
 #include <QDebug>
 #include <QFile>
 #include <QFileDialog>
+#include <QElapsedTimer>
+#include <QTextDocument>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,6 +30,10 @@ private slots:
     void mySlot();
 
     void on_btn_open_clicked();
+
+    void onCurrentIndexChanged(int index);
+
+    void onCursorPositionChanged();
 
 signals:
     void mySignal();

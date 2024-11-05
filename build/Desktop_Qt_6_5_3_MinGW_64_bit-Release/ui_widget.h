@@ -11,12 +11,13 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -35,11 +36,12 @@ public:
     QPushButton *btn_open;
     QPushButton *btn_edit;
     QSpacerItem *horizontalSpacer;
-    QTextEdit *textEdit;
+    QPlainTextEdit *plainTextEdit;
     QFrame *frame_2;
     QWidget *layoutWidget2;
     QHBoxLayout *horizontalLayout_2;
-    QLabel *label_2;
+    QLabel *btn_label;
+    QComboBox *comboBox;
     QLabel *label;
 
     void setupUi(QWidget *Widget)
@@ -64,12 +66,12 @@ public:
         frame->setObjectName("frame");
         frame->setMinimumSize(QSize(0, 50));
         frame->setMaximumSize(QSize(16777215, 500));
-        frame->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 85, 0);"));
+        frame->setStyleSheet(QString::fromUtf8(""));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
         layoutWidget1 = new QWidget(frame);
         layoutWidget1->setObjectName("layoutWidget1");
-        layoutWidget1->setGeometry(QRect(30, 10, 371, 26));
+        layoutWidget1->setGeometry(QRect(30, 10, 399, 26));
         horizontalLayout = new QHBoxLayout(layoutWidget1);
         horizontalLayout->setObjectName("horizontalLayout");
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
@@ -106,29 +108,36 @@ public:
 
         verticalLayout->addWidget(frame);
 
-        textEdit = new QTextEdit(layoutWidget);
-        textEdit->setObjectName("textEdit");
-        textEdit->setStyleSheet(QString::fromUtf8("background-color: rgba(138, 138, 138, 50);\n"
-""));
+        plainTextEdit = new QPlainTextEdit(layoutWidget);
+        plainTextEdit->setObjectName("plainTextEdit");
 
-        verticalLayout->addWidget(textEdit);
+        verticalLayout->addWidget(plainTextEdit);
 
         frame_2 = new QFrame(layoutWidget);
         frame_2->setObjectName("frame_2");
         frame_2->setMinimumSize(QSize(0, 50));
-        frame_2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 170, 127);"));
+        frame_2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         frame_2->setFrameShape(QFrame::StyledPanel);
         frame_2->setFrameShadow(QFrame::Raised);
         layoutWidget2 = new QWidget(frame_2);
         layoutWidget2->setObjectName("layoutWidget2");
-        layoutWidget2->setGeometry(QRect(430, 20, 112, 18));
+        layoutWidget2->setGeometry(QRect(430, 20, 167, 23));
         horizontalLayout_2 = new QHBoxLayout(layoutWidget2);
         horizontalLayout_2->setObjectName("horizontalLayout_2");
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
-        label_2 = new QLabel(layoutWidget2);
-        label_2->setObjectName("label_2");
+        btn_label = new QLabel(layoutWidget2);
+        btn_label->setObjectName("btn_label");
 
-        horizontalLayout_2->addWidget(label_2);
+        horizontalLayout_2->addWidget(btn_label);
+
+        comboBox = new QComboBox(layoutWidget2);
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->setObjectName("comboBox");
+
+        horizontalLayout_2->addWidget(comboBox);
 
         label = new QLabel(layoutWidget2);
         label->setObjectName("label");
@@ -146,13 +155,18 @@ public:
 
     void retranslateUi(QWidget *Widget)
     {
-        Widget->setWindowTitle(QCoreApplication::translate("Widget", "Widget", nullptr));
+        Widget->setWindowTitle(QCoreApplication::translate("Widget", "\350\256\260\344\272\213\346\234\254", nullptr));
         btn_save->setText(QCoreApplication::translate("Widget", "\344\277\235\345\255\230", nullptr));
         btn_close->setText(QCoreApplication::translate("Widget", "\345\205\263\351\227\255", nullptr));
         btn_open->setText(QCoreApplication::translate("Widget", "\346\211\223\345\274\200", nullptr));
         btn_edit->setText(QCoreApplication::translate("Widget", "\347\274\226\350\276\221", nullptr));
-        label_2->setText(QCoreApplication::translate("Widget", "\347\254\254\344\270\200\350\241\214\347\254\254\344\270\200\345\210\227", nullptr));
-        label->setText(QCoreApplication::translate("Widget", "UTF-8", nullptr));
+        btn_label->setText(QCoreApplication::translate("Widget", "\347\254\254\344\270\200\350\241\214\347\254\254\344\270\200\345\210\227", nullptr));
+        comboBox->setItemText(0, QCoreApplication::translate("Widget", "UTF-8", nullptr));
+        comboBox->setItemText(1, QCoreApplication::translate("Widget", "ANSI", nullptr));
+        comboBox->setItemText(2, QCoreApplication::translate("Widget", "BIG-5", nullptr));
+        comboBox->setItemText(3, QCoreApplication::translate("Widget", "UNICODE", nullptr));
+
+        label->setText(QString());
     } // retranslateUi
 
 };

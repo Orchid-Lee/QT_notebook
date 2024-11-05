@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Widget</string>
+   <string>记事本</string>
   </property>
   <property name="styleSheet">
    <string notr="true"> QComboBox QAbstractItemView {
@@ -49,7 +49,7 @@
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 85, 0);</string>
+       <string notr="true"/>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -62,7 +62,7 @@
         <rect>
          <x>30</x>
          <y>10</y>
-         <width>371</width>
+         <width>399</width>
          <height>26</height>
         </rect>
        </property>
@@ -127,12 +127,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QTextEdit" name="textEdit">
-      <property name="styleSheet">
-       <string notr="true">background-color: rgba(138, 138, 138, 50);
-</string>
-      </property>
-     </widget>
+     <widget class="QPlainTextEdit" name="plainTextEdit"/>
     </item>
     <item>
      <widget class="QFrame" name="frame_2">
@@ -143,7 +138,7 @@
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 170, 127);</string>
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -156,22 +151,46 @@
         <rect>
          <x>430</x>
          <y>20</y>
-         <width>112</width>
-         <height>18</height>
+         <width>167</width>
+         <height>23</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="btn_label">
           <property name="text">
            <string>第一行第一列</string>
           </property>
          </widget>
         </item>
         <item>
+         <widget class="QComboBox" name="comboBox">
+          <item>
+           <property name="text">
+            <string>UTF-8</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>ANSI</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>BIG-5</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>UNICODE</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>UTF-8</string>
+           <string/>
           </property>
          </widget>
         </item>
