@@ -1,6 +1,8 @@
 #include "widget.h"
 #include "ui_widget.h"
-#include <time.h>
+
+
+
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -24,6 +26,17 @@ Widget::Widget(QWidget *parent)
     //捕捉光标改变的信号
     QObject::connect(ui->plainTextEdit, SIGNAL(cursorPositionChanged()), this, SLOT(onCursorPositionChanged()));
 
+    //快捷键
+    QShortcut *shortcutOpen = new QShortcut(QKeySequence(tr("Ctrl+O", "File|Open")), this);
+    QShortcut *shortcutSave = new QShortcut(QKeySequence(tr("Ctrl+S", "Save")), this);
+
+    connect(shortcutOpen, &QShortcut::activated, [=](){
+        on_btn_open_clicked();
+    });
+
+    connect(shortcutSave, &QShortcut::activated, [=](){
+        this->close();
+    });
     this->setLayout(ui->verticalLayout);
 }
 
@@ -32,27 +45,69 @@ Widget::~Widget()
     delete ui;
 }
 
+void Widget::enterEvent(QEnterEvent *event)
+{
+    qDebug() << "mouse enter.";
+}
+
+void Widget::leaveEvent(QEvent *event)
+{
+    qDebug() << "mouse leave.";
+
+}
+
+void Widget::wheelEvent(QWheelEvent *event)
+{
+    qDebug() << "wheel move.";
+    qDebug() << event->angleDelta();
+}
+
+void Widget::closeEvent(QCloseEvent *event)
+{
+    qDebug() << "close.";
+    int ret = QMessageBox::warning(this, tr("提示"), tr("当前有未保存的数据，请确认是否关闭？"), QMessageBox::Ok | QMessageBox::No);
+    switch(ret)
+    {
+    case QMessageBox::Ok:
+        qDebug() << "我要关闭了，你不保存一下吗？";
+        event->accept();
+        break;
+    default:
+        qDebug() << "啥事儿没有.";
+        event->ignore();
+    }
+}
+
+
+
+
+
 void Widget::on_btn_save_clicked()
 {
     time_t now = time(0);
     char* time_str = ctime(&now);
     qDebug() << "save btn clicked()." << time_str;
 
-    //打开文件
-    QFile file("C:\\Users\\codefish\\Desktop\\openfile.txt");
-    if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
-        qDebug() << "file open failed.";
-    };
+    if(!file.isOpen())
+    {
+        if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
+            qDebug() << "file open failed.";
+        };
+    }
+
     //写入文件
     // if(file.write("This is my first qt program.") == -1)
     // {
     //     qDebug() << "write failed.";
     // };
+    file.resize(0);
     QTextStream out(&file);
     out.setEncoding(QStringConverter::Utf8);
-    out << "I love u, 我爱你!";
+    out << ui->plainTextEdit->toPlainText();
     //关闭
     file.close();
+    file.flush();
+    out.flush();
     qDebug() << "write succ.";
 }
 
@@ -62,6 +117,43 @@ void Widget::on_btn_close_clicked()
     char* time_str = ctime(&now);
     qDebug() << "close btn clicked()." << time_str;
     this->setWindowTitle("记事本");
+
+    if(file.isOpen())
+    {
+
+    }
+
+    int ret = QMessageBox::warning(this, tr("提示"),
+                         tr("文件已经被修改，是否保存后关闭？"),
+                         QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel,
+                         QMessageBox::Save);
+
+    switch(ret)
+    {
+    case QMessageBox::Save:
+        qDebug() << "saved.";
+        if(file.isOpen())
+        {
+            on_btn_save_clicked();
+        }
+        this->close();
+        break;
+    case QMessageBox::Discard:
+        if(file.isOpen())
+        {
+            file.close();
+        }
+        ui->plainTextEdit->clear();
+        qDebug() << "discard.";
+        this->close();
+        break;
+    case QMessageBox::Cancel:
+        qDebug() << "cancel.";
+        break;
+    default:
+        qDebug() << "default.";
+        break;
+    }
 }
 
 void Widget::on_btn_edit_clicked()
@@ -79,7 +171,6 @@ void Widget::mySlot()
 void Widget::on_btn_open_clicked()
 {
     qDebug() << "文件打开.";
-    ui->plainTextEdit->clear();
     QString fileName = QFileDialog::getOpenFileName(this, tr("选择文件"), "D://QT", tr("文本文件(*.txt)"));
     if(fileName.isNull())
     {
@@ -87,12 +178,13 @@ void Widget::on_btn_open_clicked()
         return;
     }
     this->setWindowTitle(fileName + "-记事本");
-    QFile file(fileName);
-    if(!file.open(QFile::ReadOnly | QFile::Text))
+    file.setFileName(fileName);
+    if(!file.open(QFile::ReadWrite | QFile::Text))
     {
         qDebug() << "file open err";
         return;
     }
+    ui->plainTextEdit->clear();
 
     // const uchar* contents = file.map(0, file.size());
     // const QString data = QString::fromUtf8(reinterpret_cast<const char*>(contents), file.size());

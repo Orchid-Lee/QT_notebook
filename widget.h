@@ -8,6 +8,10 @@
 #include <QFileDialog>
 #include <QElapsedTimer>
 #include <QTextDocument>
+#include <QMessageBox>
+#include <time.h>
+#include <QShortcut>
+#include <QWheelEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,6 +27,13 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
+    QFile file;
+
+    void enterEvent(QEnterEvent *event) override;
+    void leaveEvent(QEvent *event) override;
+    void wheelEvent(QWheelEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
+
 private slots:
     void on_btn_save_clicked();
     void on_btn_close_clicked();
@@ -34,6 +45,8 @@ private slots:
     void onCurrentIndexChanged(int index);
 
     void onCursorPositionChanged();
+
+
 
 signals:
     void mySignal();
