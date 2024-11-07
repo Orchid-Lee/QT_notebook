@@ -10,9 +10,13 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    mybutton.cpp \
+    mytextedit.cpp \
     widget.cpp
 
 HEADERS += \
+    mybutton.h \
+    mytextedit.h \
     widget.h
 
 FORMS += \

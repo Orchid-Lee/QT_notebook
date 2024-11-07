@@ -12,6 +12,7 @@
 #include <time.h>
 #include <QShortcut>
 #include <QWheelEvent>
+#include <mybutton.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -33,6 +34,7 @@ public:
     void leaveEvent(QEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;
     void closeEvent(QCloseEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void on_btn_save_clicked();

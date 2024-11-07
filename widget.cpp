@@ -1,9 +1,6 @@
 #include "widget.h"
 #include "ui_widget.h"
 
-
-
-
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
@@ -36,6 +33,11 @@ Widget::Widget(QWidget *parent)
 
     connect(shortcutSave, &QShortcut::activated, [=](){
         this->close();
+    });
+
+    //自定义按钮的事件回调
+    connect(ui->myBtn, &MyButton::clicked, [=](){
+        qDebug() << "self btn callback()";
     });
     this->setLayout(ui->verticalLayout);
 }
@@ -76,6 +78,11 @@ void Widget::closeEvent(QCloseEvent *event)
         qDebug() << "啥事儿没有.";
         event->ignore();
     }
+}
+
+void Widget::resizeEvent(QResizeEvent *event)
+{
+    qDebug() << "oldSize:" << event->oldSize() << "newSize:" << event->size();
 }
 
 

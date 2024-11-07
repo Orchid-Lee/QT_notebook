@@ -20,6 +20,7 @@
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "mybutton.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -35,6 +36,7 @@ public:
     QPushButton *btn_close;
     QPushButton *btn_open;
     QPushButton *btn_edit;
+    MyButton *myBtn;
     QSpacerItem *horizontalSpacer;
     QPlainTextEdit *plainTextEdit;
     QFrame *frame_2;
@@ -71,7 +73,7 @@ public:
         frame->setFrameShadow(QFrame::Raised);
         layoutWidget1 = new QWidget(frame);
         layoutWidget1->setObjectName("layoutWidget1");
-        layoutWidget1->setGeometry(QRect(30, 10, 399, 26));
+        layoutWidget1->setGeometry(QRect(30, 10, 399, 52));
         horizontalLayout = new QHBoxLayout(layoutWidget1);
         horizontalLayout->setObjectName("horizontalLayout");
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
@@ -100,6 +102,12 @@ public:
         btn_edit->setStyleSheet(QString::fromUtf8(" QPushButton { color: red; background-color: white }"));
 
         horizontalLayout->addWidget(btn_edit);
+
+        myBtn = new MyButton(layoutWidget1);
+        myBtn->setObjectName("myBtn");
+        myBtn->setMinimumSize(QSize(25, 25));
+
+        horizontalLayout->addWidget(myBtn);
 
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
